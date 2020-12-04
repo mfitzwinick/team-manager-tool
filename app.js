@@ -9,6 +9,27 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
+inquirer
+  .prompt([
+    {
+      type: 'input',
+      message: 'What is your name?',
+      name: 'name',
+    },
+    {
+      type: 'number',
+      message: 'What is your employee ID?',
+      name: 'id',
+    },
+    {
+      type: 'input',
+      message: 'Please enter your email:',
+      name: 'email',
+    },
+  ])
+  .then((response) =>
+  console.log(response)
+  );
 
 
 // Write code to use inquirer to gather information about the development team members,
