@@ -82,12 +82,13 @@ const addManager=() => {
   
   ])
   .then((response) =>{
-
     const manager = new Manager(response.managerName, response.managerId, response.managerEmail, response.managerOfficeNumber);
-   employees.push (manager);
-   addNewEmployee();
+    employees.push (manager);
+    addNewEmployee();
   }
-  );
+  )
+};
+  
   const addEngineer=() => {
     inquirer
     .prompt([
@@ -108,7 +109,7 @@ const addManager=() => {
       },
       {
         type: 'input',
-        message: 'Enter git hub user name:',
+        message: 'Enter github user name:',
         name: 'github',
       },
     
@@ -116,45 +117,47 @@ const addManager=() => {
     .then((response) =>{
   
       const engineer = new Engineer(response.engineerName, response.engineerId, response.engineerEmail, response.github);
-     employees.push (engineer);
-     addNewEmployee();
-  
+      employees.push (engineer);
+      addNewEmployee();
     }
+    )
+  };
+    const addIntern=() => {
+      inquirer
+      .prompt([
+        {
+          type: 'input',
+          message: 'Enter intern Name:',
+          name: 'internName',
+        },
+        {
+          type: 'number',
+          message: 'Enter employee ID:',
+          name: 'internId',
+        },
+        {
+          type: 'input',
+          message: 'Enter intern email:',
+          name: 'internEmail',
+        },
+        {
+          type: 'input',
+          message: 'Enter school name:',
+          name: 'schoolName',
+        },
+      
+      ])
+      .then((response) =>{
     
-    );
-
-  
-}
+        const intern = new Intern(response.internName, response.internId, response.internEmail, response.schoolName);
+        employees.push (intern);
+        addNewEmployee();
+      }
+      )
+    };
 addEmployee();
-// inquirer
-//   .prompt([
-//     {
-//       type: 'input',
-//       message: 'What is your name?',
-//       name: 'name',
-//     },
-//     {
-//       type: 'number',
-//       message: 'What is your employee ID?',
-//       name: 'id',
-//     },
-//     {
-//       type: 'input',
-//       message: 'Please enter your email:',
-//       name: 'email',
-//     },
-//   ])
-//   .then((response) =>
-//   console.log(response)
-//   );
-// }gf
 
 
-// Write code to use inquirer to gather information about the development team members,
-// and to create objects for each team member (using the correct classes as blueprints!)
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
 // generate and return a block of HTML including templated divs for each employee!
 
 // After you have your html, you're now ready to create an HTML file using the HTML
@@ -163,12 +166,4 @@ addEmployee();
 // Hint: you may need to check if the `output` folder exists and create it if it
 // does not.
 
-// HINT: each employee type (manager, engineer, or intern) has slightly different
-// information; write your code to ask different questions via inquirer depending on
-// employee type.
 
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
