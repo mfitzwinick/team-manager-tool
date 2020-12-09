@@ -9,27 +9,145 @@ const OUTPUT_DIR = path.resolve(__dirname, "output");
 const outputPath = path.join(OUTPUT_DIR, "team.html");
 
 const render = require("./lib/htmlRenderer");
-inquirer
+const { listenerCount } = require("process");
+var employees=[];
+
+const addEmployee = () => {
+  inquirer
+  .prompt ([
+    {type: "list",
+     message: "What type of employee would you like to add?",
+     name:"Employee",
+     choices: ["manager", "engineer", "intern"]
+    }
+  ]).then ((res)=> {
+    console.log(res.Employee)
+    switch (res.Employee){
+      case "manager" : 
+      addManager();
+      break;
+      case "intern":
+      addIntern();
+      break;
+      case "engineer":
+      addEngineer();
+      break;  
+    }
+  })
+
+}
+
+const addNewEmployee = () => {
+  inquirer
+  .prompt (
+    {
+type: 'list',
+message: 'Would you like to add another employee?',
+choices: ["yes", "no"],
+name: 'start'
+  }
+  ).then ((response)=> {
+    if(response.start == "yes"){
+      addEmployee()
+    } else if (response.start == "no") {
+      //console.table(employees)
+      render(employees);
+    } else if (err) { console.log(err)}
+  })
+}
+
+const addManager=() => {
+  inquirer
   .prompt([
     {
       type: 'input',
-      message: 'What is your name?',
-      name: 'name',
+      message: 'Enter Manager Name:',
+      name: 'managerName',
     },
     {
       type: 'number',
-      message: 'What is your employee ID?',
-      name: 'id',
+      message: 'Enter employee ID:',
+      name: 'managerId',
     },
     {
       type: 'input',
-      message: 'Please enter your email:',
-      name: 'email',
+      message: 'Enter manager email:',
+      name: 'managerEmail',
     },
+    {
+      type: 'input',
+      message: 'Enter office number:',
+      name: 'managerOfficeNumber',
+    },
+  
   ])
-  .then((response) =>
-  console.log(response)
+  .then((response) =>{
+
+    const manager = new Manager(response.managerName, response.managerId, response.managerEmail, response.managerOfficeNumber);
+   employees.push (manager);
+   addNewEmployee();
+  }
   );
+  const addEngineer=() => {
+    inquirer
+    .prompt([
+      {
+        type: 'input',
+        message: 'Enter Engineer Name:',
+        name: 'engineerName',
+      },
+      {
+        type: 'number',
+        message: 'Enter employee ID:',
+        name: 'engineerId',
+      },
+      {
+        type: 'input',
+        message: 'Enter engineer email:',
+        name: 'engineerEmail',
+      },
+      {
+        type: 'input',
+        message: 'Enter git hub user name:',
+        name: 'github',
+      },
+    
+    ])
+    .then((response) =>{
+  
+      const engineer = new Engineer(response.engineerName, response.engineerId, response.engineerEmail, response.github);
+     employees.push (engineer);
+     addNewEmployee();
+  
+    }
+    
+    );
+
+  
+}
+addEmployee();
+// inquirer
+//   .prompt([
+//     {
+//       type: 'input',
+//       message: 'What is your name?',
+//       name: 'name',
+//     },
+//     {
+//       type: 'number',
+//       message: 'What is your employee ID?',
+//       name: 'id',
+//     },
+//     {
+//       type: 'input',
+//       message: 'Please enter your email:',
+//       name: 'email',
+//     },
+//   ])
+//   .then((response) =>
+//   console.log(response)
+//   );
+// }gf
 
 
 // Write code to use inquirer to gather information about the development team members,
